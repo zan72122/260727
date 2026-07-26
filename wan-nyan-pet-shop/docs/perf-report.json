@@ -1,0 +1,95 @@
+{
+  "generatedAt": "2026-07-26T19:30:48.810Z",
+  "environment": {
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.0.0 Safari/537.36",
+    "viewport": "960x600 CSS px",
+    "renderer": "Chromium headless, SwiftShader software rasteriser",
+    "note": "Software rendering is a worst case; hardware-accelerated desktop browsers are considerably faster.",
+    "sampleSeconds": 8
+  },
+  "boot": {
+    "domContentLoadedMs": 123.4,
+    "loadMs": 123.5,
+    "firstFrameMs": 198.5
+  },
+  "simulation": {
+    "simSeconds": 60,
+    "wallMs": 15.5,
+    "msPerStep": 0.0086,
+    "realtimeFactor": 3871
+  },
+  "roomLayer": {
+    "drawRoomMs": 0.517,
+    "blitCachedLayerMs": 0.008,
+    "speedup": 69
+  },
+  "scenarios": [
+    {
+      "id": "title",
+      "label": "タイトル画面（アイドル）",
+      "frame": {
+        "fps": 60,
+        "avgMs": 16.665,
+        "p95Ms": 16.9,
+        "worstMs": 19.4,
+        "samples": 300,
+        "renderMs": 0.492,
+        "renderP95Ms": 0.7,
+        "renderWorstMs": 0.8,
+        "simMs": 0.006,
+        "simP95Ms": 0.1,
+        "budgetUsedPct": 3
+      },
+      "particles": 0,
+      "pets": 2,
+      "customers": 0,
+      "messes": 0,
+      "heapMB": 2.8
+    },
+    {
+      "id": "typical",
+      "label": "通常プレイ（開店中・お客さん来店あり）",
+      "frame": {
+        "fps": 60,
+        "avgMs": 16.723,
+        "p95Ms": 16.9,
+        "worstMs": 44.1,
+        "samples": 300,
+        "renderMs": 0.921,
+        "renderP95Ms": 1.2,
+        "renderWorstMs": 1.5,
+        "simMs": 0.03,
+        "simP95Ms": 0.1,
+        "budgetUsedPct": 5.7
+      },
+      "particles": 0,
+      "pets": 2,
+      "customers": 1,
+      "messes": 6,
+      "heapMB": 2.5
+    },
+    {
+      "id": "stress",
+      "label": "ストレス（ペット6匹・よごれ8個・パーティクル連続発生）",
+      "frame": {
+        "fps": 60,
+        "avgMs": 16.669,
+        "p95Ms": 17.2,
+        "worstMs": 18.4,
+        "samples": 300,
+        "renderMs": 1.531,
+        "renderP95Ms": 2.2,
+        "renderWorstMs": 4.2,
+        "simMs": 0.075,
+        "simP95Ms": 0.2,
+        "budgetUsedPct": 9.6
+      },
+      "particles": 180,
+      "pets": 6,
+      "customers": 1,
+      "messes": 8,
+      "heapMB": 2.6
+    }
+  ],
+  "consoleErrors": []
+}
