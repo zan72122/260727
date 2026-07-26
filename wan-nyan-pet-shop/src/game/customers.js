@@ -27,6 +27,7 @@ export function createCustomer(rng, day = 1) {
       y: rng.range(LAYOUT.FLOOR.y + LAYOUT.FLOOR.h - 70, LAYOUT.FLOOR.y + LAYOUT.FLOOR.h - 18),
     },
     targetPetId: null,
+    approachTime: 0,
     line: rng.pick(CUSTOMER_LINES.arrive),
     lineTime: 3,
     animPhase: rng.range(0, 6.28),
@@ -109,6 +110,10 @@ export function updateCustomer(customer, dt, ctx) {
         if (match) {
           customer.state = 'approach';
           customer.targetPetId = match.pet.id;
+          // Aim at the pet straight away: the next tick starts walking there
+          // instead of adopting from wherever the browsing stop happened to be.
+          customer.target = { x: match.pet.pos.x + 42, y: match.pet.pos.y + 8 };
+          customer.approachTime = 0;
           customer.line = ctx.rng.pick(CUSTOMER_LINES.happy);
           customer.lineTime = 3;
         } else {
@@ -131,7 +136,12 @@ export function updateCustomer(customer, dt, ctx) {
         break;
       }
       customer.target = { x: pet.pos.x + 42, y: pet.pos.y + 8 };
-      if (arrived || Math.hypot(customer.pos.x - customer.target.x, customer.pos.y - customer.target.y) < 26) {
+      customer.approachTime = (customer.approachTime || 0) + dt;
+      const reach = Math.hypot(customer.pos.x - customer.target.x, customer.pos.y - customer.target.y);
+      // `arrived` describes the target from the *start* of this tick, so the
+      // decision uses the real distance. The timeout keeps a customer from
+      // chasing a pet that keeps wandering off.
+      if (reach < 30 || customer.approachTime > 10) {
         customer.state = 'adopt';
         return { type: 'adopt', petId: pet.id };
       }

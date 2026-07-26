@@ -231,6 +231,52 @@ test('progress survives a reload through つづきから', async () => {
   assert.equal(restored.phase, 'open');
 });
 
+test('セーブしてタイトルへ then はじめから really starts a new shop', async () => {
+  await page.evaluate(() => {
+    const g = globalThis.__WANNYAN__;
+    g.start();
+    g.simulate(30);
+    g.state.day = 5;
+    g.state.money = 9876;
+    g.state.upgrades.bed = 2;
+  });
+  await page.keyboard.press('Escape');       // pause (autosaves)
+  await clickRegion('btn:save');             // セーブしてタイトルへ
+  assert.equal(await getState(() => globalThis.__WANNYAN__.state.phase), 'title');
+  await clickRegion('btn:start');            // はじめから
+  const fresh = await getState(() => ({
+    phase: globalThis.__WANNYAN__.state.phase,
+    day: globalThis.__WANNYAN__.state.day,
+    money: globalThis.__WANNYAN__.state.money,
+    beds: globalThis.__WANNYAN__.state.upgrades.bed,
+    paused: globalThis.__WANNYAN__.ui.paused,
+  }));
+  assert.equal(fresh.phase, 'open');
+  assert.equal(fresh.day, 1, 'はじめから resumed the old save instead of restarting');
+  assert.equal(fresh.money, 1500);
+  assert.equal(fresh.beds, 0);
+  assert.equal(fresh.paused, false);
+  // And the restarted day must still close normally (rent charged, report shown).
+  await page.evaluate(() => globalThis.__WANNYAN__.simulate(121));
+  assert.equal(await getState(() => globalThis.__WANNYAN__.state.phase), 'report');
+});
+
+test('the pause button on the report screen cannot freeze the next day', async () => {
+  await page.evaluate(() => {
+    const g = globalThis.__WANNYAN__;
+    g.start();
+    g.endDay();
+  });
+  await clickRegion('ui:pause');
+  assert.equal(await getState(() => globalThis.__WANNYAN__.ui.paused), false);
+  await clickRegion('btn:toshop');
+  await clickRegion('btn:open');
+  const before = await getState(() => globalThis.__WANNYAN__.state.timeInDay);
+  await page.waitForTimeout(500);
+  const after = await getState(() => globalThis.__WANNYAN__.state.timeInDay);
+  assert.ok(after > before, 'the new day started frozen');
+});
+
 test('the particle pool never exceeds its capacity under spam', async () => {
   const peak = await page.evaluate(() => {
     const g = globalThis.__WANNYAN__;

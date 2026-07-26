@@ -97,6 +97,38 @@ test('a customer eventually adopts a great pet', () => {
   assert.equal(outcome.petId, pet.id);
 });
 
+test('a customer walks up to the pet before adopting it', () => {
+  for (let seed = 1; seed <= 10; seed++) {
+    const c = createCustomer(new Rng(seed), 1);
+    c.wantSpecies = null;
+    c.wantPersonality = null;
+    const pet = makePet('dog', { hunger: 100, clean: 100, energy: 100, health: 100, affection: 95 });
+    pet.pos = { x: 200, y: 300 };
+    const ctx = { rng: new Rng(seed), pets: [pet], shopClean: 100 };
+    let outcome = null;
+    for (let i = 0; i < 3000 && !outcome; i++) outcome = updateCustomer(c, 1 / 30, ctx);
+    assert.ok(outcome && outcome.type === 'adopt', `seed ${seed}: no adoption`);
+    const dist = Math.hypot(c.pos.x - pet.pos.x, c.pos.y - pet.pos.y);
+    assert.ok(dist < 80, `seed ${seed}: adopted from ${Math.round(dist)}px away`);
+  }
+});
+
+test('a customer chasing a wandering pet gives up waiting and adopts anyway', () => {
+  const c = createCustomer(new Rng(7), 1);
+  c.wantSpecies = null;
+  c.wantPersonality = null;
+  const pet = makePet('cat', { hunger: 100, clean: 100, energy: 100, health: 100, affection: 95 });
+  const ctx = { rng: new Rng(7), pets: [pet], shopClean: 100 };
+  let outcome = null;
+  for (let i = 0; i < 3000 && !outcome; i++) {
+    // The pet keeps teleporting away, so proximity alone would never be reached.
+    pet.pos = { x: 120 + ((i * 37) % 700), y: 300 + ((i * 13) % 150) };
+    outcome = updateCustomer(c, 1 / 30, ctx);
+  }
+  assert.ok(outcome, 'customer never resolved');
+  assert.equal(outcome.type, 'adopt');
+});
+
 test('a customer whose chosen pet disappears goes back to browsing', () => {
   const c = makeCustomer({ wantSpecies: null, wantPersonality: null });
   c.state = 'approach';

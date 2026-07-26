@@ -108,6 +108,27 @@ test('petting a sleeping pet is gentle rather than refused', () => {
   assert.equal(res.gentle, true);
 });
 
+test('petting a sleeping pet still takes a cooldown (no click-spam bonding)', () => {
+  const p = pet({ affection: 10 });
+  p.state = 'sleep';
+  const first = applyCare(p, 'pet', {});
+  assert.equal(first.ok, true);
+  assert.ok(p.cooldowns.pet > 0, 'a gentle stroke must arm the cooldown too');
+  const spam = applyCare(p, 'pet', {});
+  assert.equal(spam.ok, false);
+  assert.equal(spam.reason, 'cooldown');
+  assert.ok(p.needs.affection < 13, `affection ran away: ${p.needs.affection}`);
+});
+
+test('200 clicks in one frame cannot max a sleeping pet out', () => {
+  const p = pet({ affection: 0 });
+  p.state = 'sleep';
+  let accepted = 0;
+  for (let i = 0; i < 200; i++) if (applyCare(p, 'pet', {}).ok) accepted++;
+  assert.equal(accepted, 1);
+  assert.ok(p.needs.affection <= 2, `affection reached ${p.needs.affection}`);
+});
+
 test('personality changes how much affection an action gives', () => {
   const shy = pet({ affection: 10 });
   shy.personality = 'shy';

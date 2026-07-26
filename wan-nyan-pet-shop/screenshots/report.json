@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-26T19:33:10.500Z",
+  "generatedAt": "2026-07-26T19:48:43.698Z",
   "seed": 20260727,
   "deviceScaleFactor": 2,
   "shots": [
@@ -13,43 +13,43 @@
       "name": "02-shop-open",
       "note": "開店直後：ペットとHUD",
       "file": "screenshots/02-shop-open.png",
-      "bytes": 328232
+      "bytes": 328229
     },
     {
       "name": "03-care",
       "note": "お世話中：お客さん・よごれ・ハート",
       "file": "screenshots/03-care.png",
-      "bytes": 358644
+      "bytes": 358170
     },
     {
       "name": "04-cleaning",
       "note": "おそうじ：店内よごれ警告",
       "file": "screenshots/04-cleaning.png",
-      "bytes": 364145
+      "bytes": 364160
     },
     {
       "name": "05-report",
       "note": "一日のせいさん",
       "file": "screenshots/05-report.png",
-      "bytes": 239616
+      "bytes": 239593
     },
     {
       "name": "06-upgrades",
       "note": "お店のじゅんび（アップグレード）",
       "file": "screenshots/06-upgrades.png",
-      "bytes": 245157
+      "bytes": 245167
     },
     {
       "name": "07-ending",
       "note": "エンディング",
       "file": "screenshots/07-ending.png",
-      "bytes": 270928
+      "bytes": 270945
     },
     {
       "name": "08-pause",
       "note": "ポーズ画面",
       "file": "screenshots/08-pause.png",
-      "bytes": 278411
+      "bytes": 278077
     }
   ],
   "consoleErrors": []

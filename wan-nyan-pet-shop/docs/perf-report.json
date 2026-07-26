@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-26T19:30:48.810Z",
+  "generatedAt": "2026-07-26T19:49:09.257Z",
   "environment": {
     "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.0.0 Safari/537.36",
     "viewport": "960x600 CSS px",
@@ -8,20 +8,20 @@
     "sampleSeconds": 8
   },
   "boot": {
-    "domContentLoadedMs": 123.4,
-    "loadMs": 123.5,
-    "firstFrameMs": 198.5
+    "domContentLoadedMs": 206.6,
+    "loadMs": 207,
+    "firstFrameMs": 294
   },
   "simulation": {
     "simSeconds": 60,
-    "wallMs": 15.5,
-    "msPerStep": 0.0086,
-    "realtimeFactor": 3871
+    "wallMs": 23.7,
+    "msPerStep": 0.0132,
+    "realtimeFactor": 2532
   },
   "roomLayer": {
-    "drawRoomMs": 0.517,
-    "blitCachedLayerMs": 0.008,
-    "speedup": 69
+    "drawRoomMs": 0.44,
+    "blitCachedLayerMs": 0,
+    "speedup": 4400
   },
   "scenarios": [
     {
@@ -31,12 +31,12 @@
         "fps": 60,
         "avgMs": 16.665,
         "p95Ms": 16.9,
-        "worstMs": 19.4,
+        "worstMs": 20.5,
         "samples": 300,
-        "renderMs": 0.492,
+        "renderMs": 0.5,
         "renderP95Ms": 0.7,
-        "renderWorstMs": 0.8,
-        "simMs": 0.006,
+        "renderWorstMs": 1.6,
+        "simMs": 0.005,
         "simP95Ms": 0.1,
         "budgetUsedPct": 3
       },
@@ -44,51 +44,51 @@
       "pets": 2,
       "customers": 0,
       "messes": 0,
-      "heapMB": 2.8
+      "heapMB": 2.9
     },
     {
       "id": "typical",
       "label": "通常プレイ（開店中・お客さん来店あり）",
       "frame": {
         "fps": 60,
-        "avgMs": 16.723,
+        "avgMs": 16.667,
         "p95Ms": 16.9,
-        "worstMs": 44.1,
+        "worstMs": 18.4,
         "samples": 300,
-        "renderMs": 0.921,
-        "renderP95Ms": 1.2,
-        "renderWorstMs": 1.5,
-        "simMs": 0.03,
+        "renderMs": 1.03,
+        "renderP95Ms": 1.3,
+        "renderWorstMs": 3.3,
+        "simMs": 0.04,
         "simP95Ms": 0.1,
-        "budgetUsedPct": 5.7
+        "budgetUsedPct": 6.4
       },
       "particles": 0,
       "pets": 2,
       "customers": 1,
       "messes": 6,
-      "heapMB": 2.5
+      "heapMB": 2.6
     },
     {
       "id": "stress",
       "label": "ストレス（ペット6匹・よごれ8個・パーティクル連続発生）",
       "frame": {
         "fps": 60,
-        "avgMs": 16.669,
-        "p95Ms": 17.2,
-        "worstMs": 18.4,
+        "avgMs": 16.802,
+        "p95Ms": 20,
+        "worstMs": 57.5,
         "samples": 300,
-        "renderMs": 1.531,
-        "renderP95Ms": 2.2,
-        "renderWorstMs": 4.2,
-        "simMs": 0.075,
+        "renderMs": 1.82,
+        "renderP95Ms": 2.5,
+        "renderWorstMs": 3.3,
+        "simMs": 0.084,
         "simP95Ms": 0.2,
-        "budgetUsedPct": 9.6
+        "budgetUsedPct": 11.4
       },
       "particles": 180,
       "pets": 6,
       "customers": 1,
       "messes": 8,
-      "heapMB": 2.6
+      "heapMB": 2.4
     }
   ],
   "consoleErrors": []

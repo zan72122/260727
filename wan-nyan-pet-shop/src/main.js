@@ -217,10 +217,12 @@ function handleRegion(hit) {
       audio.click();
       return true;
     case 'ui:pause':
-      togglePause();
+      // Only the open shop has a pause overlay to show; pausing from the
+      // report/shop screens would freeze the next day behind nothing.
+      if (state.phase === PHASES.OPEN) togglePause();
       return true;
     case 'btn:start':
-      startGame(state);
+      startNewGame();
       audio.click();
       return true;
     case 'btn:continue': {
@@ -252,9 +254,7 @@ function handleRegion(hit) {
       audio.click();
       return true;
     case 'btn:retry':
-      state = createGame({ seed: (Date.now() % 100000) + 13, bus });
-      startGame(state);
-      particles.clear();
+      startNewGame();
       audio.click();
       return true;
     case 'btn:resume':
@@ -269,6 +269,18 @@ function handleRegion(hit) {
     default:
       return false;
   }
+}
+
+/**
+ * "はじめから" must always be a fresh shop. Returning to the title from the
+ * pause menu only flips the phase, so the played state is still live here and
+ * has to be replaced — otherwise the player resumes their old day with the
+ * clock reset and rent never charged.
+ */
+function startNewGame() {
+  state = createGame({ seed: (Date.now() % 100000) + 7, bus });
+  particles.clear();
+  startGame(state);
 }
 
 function togglePause() {
@@ -290,7 +302,7 @@ globalThis.addEventListener('keydown', (ev) => {
     if (state.phase === PHASES.OPEN) togglePause();
   } else if (key === ' ') {
     ev.preventDefault();
-    if (state.phase === PHASES.TITLE) startGame(state);
+    if (state.phase === PHASES.TITLE) startNewGame();
     else if (state.phase === PHASES.REPORT) openShopScreen(state);
     else if (state.phase === PHASES.SHOP) nextDay(state);
     else if (state.phase === PHASES.ENDING) continueAfterEnding(state);

@@ -143,7 +143,11 @@ export function applyCare(pet, actionId, ctx = {}) {
     say(pet, pet.species === 'dog' ? 'ワンワン！' : 'にゃーん！');
   } else if (actionId === 'pet') {
     if (pet.state === 'sleep') {
+      // A gentle stroke still counts as an action, so it takes the same
+      // cooldown — otherwise a sleeping pet could be petted every frame.
       n.affection = clamp(n.affection + 1, 0, 100);
+      pet.cooldowns.pet = action.cooldown;
+      pet.lifetimeCare += 1;
       say(pet, 'zzz…');
       return { ok: true, cost: 0, gentle: true };
     }
